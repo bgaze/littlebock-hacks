@@ -15,7 +15,7 @@ function loadJs(file) {
 }
 
 function loadJquery() {
-    loadJs('jquery.slim.min');
+    loadJs('jquery.min');
 }
 
 if (site.includes('littlebock.fr')) {
@@ -29,5 +29,8 @@ if (site.includes('littlebock.fr')) {
         loadCss('print');
         loadJquery();
         loadJs('print');
+    } else if (/\/user\/brewery\/recipe\/\d+\/edit\/?$/.test(path)) {
+        loadJquery();
+        loadJs('recipe');
     }
 }
