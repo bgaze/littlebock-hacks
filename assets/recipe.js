@@ -79,7 +79,7 @@ $(document).ready(function () {
         computeBasedOnTotal('fermentables', '.fermentable-amount', $(`#fermentables-total-amount`).data('total'), 1000);
     });
 
-    // Set fermentables total amount
+    // Set hops total IBU
     $('#hops-total-widget button').click(function () {
         let ibu = 0;
 
