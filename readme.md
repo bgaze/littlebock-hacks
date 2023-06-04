@@ -1,27 +1,30 @@
-# Installation
+# Littlebock Hacks
 
-Installer l'extension Chrome [Custom JavaScript for Websites 2](https://chrome.google.com/webstore/detail/custom-javascript-for-web/ddbjnfjiigjmcpcpkmhogomapikjbjdk
-).
+Cette extension permet d'effectuer les modifications suivantes dans l'interface de Littlebock :
 
-Ouvrir l'extension et pour plus de confort cliquer sur `Open in New Tab` tout en haut.
+- **Impression d'une recette :** modification de la mise en page pour être plus compacte et tenir plus facilement sur une seule page.
+- **Stocks > Matières premières :** affichage du stock total dans les onglets "Céréales et sucres", "Houblons" et "Levures".
+- **Stocks > Bières conditionnées :** affichage du stock total en litres et en nombre de bouteilles.
+- **Edition d'une recette :**
+  - Réorganisation de l'ordre de section : sélection de la levure et configuration de l'empâtage avant la sélection des ingrédients.
+  - Affichage du poids total pour les céréales et les houblons.
+  - Ajustement du poids total des fermentescibles (la valeur saisie est dispatchée dans les céréales en conservant les proportions de la recette).
+  - Ajustement du poids des houblons pour atteindre un IBU cible (le poids de chaque houblon est ajusté pour atteindre la valeur saisie en conservant les proportions de la recette).
 
-## Etape 1
+**Attention :**
 
-Créer un nouveau script en cliquant sur `New RegExp`.  
-Dans la fenêtre qui s'ouvre copier-coller `https:\/\/www\.littlebock\.fr\/.+\/print` puis valider en cliquant sur `Add`.  
+C'est une extension que j'ai créé pour mes propres besoins, et selon mes propres préférences.  
+Toute remarque / demande d'amélioration est la bienvenue mais, si elles seront toutes examinées, je ne m'engage en aucun cas à les satisfaire.
 
-> Celà permet de préciser à l'extension qu'elle ne doit modifier que les pages d'impression de Littlebock.
+Elle ne fonctionne que dans Chrome et aucun support ne sera apporté pour d'autres navigateurs.
 
-## Etape 2
+**Installation :**
 
-En haut à droite, dérouler le menu intitulé `You can inject your own external scripts or predefined one` et sélectionner `jQuery 3.2.1`.
+1. Télécharger l'archive de l'extension : [télécharger](https://github.com/bgaze/littlebock-hacks/archive/refs/heads/main.zip)
+2. Extraire l'archive dans un répertoire adéquat.
+3. Dans Chrome, afficher le gestionnaire d'extensions (**Menu > Extensions Gérer les extensions**).
+4. En haut à droite, activer le **Mode développeur**.
+5. Cliquer sur **Charger l'extension non empaquetée** et sélectionner le dossier précédemment créé.
 
-## Etape 3
-
-**Important :** dans la zone en bas supprimer le texte en gris : `// Here You can type your custom JavaScript...`.
-
-Copier-coller dans cette zone tout le contenu du fichier [app.js](./script.js).
-
-Cliquez sur `Save` tout en haut à gauche pour enregistrer.
-
-Désormais, la mise en pages des impressions de Littlebock sera automatiquement améliorée.
+L'extension est désormais active.  
+Si des pages de Littlebock sont ouvertes dans votre navigateur, il faudra les recharger pour en voir les effets.
