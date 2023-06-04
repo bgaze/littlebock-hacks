@@ -24,7 +24,7 @@ Aucune publication dans le Chrome Web Store ne sera effectuée.
 
 1. Télécharger l'archive de l'extension : [télécharger](https://github.com/bgaze/littlebock-hacks/archive/refs/heads/main.zip)
 2. Extraire l'archive dans un répertoire adéquat.
-3. Dans Chrome, afficher le gestionnaire d'extensions (**Menu > Extensions Gérer les extensions**).
+3. Dans Chrome, afficher le gestionnaire d'extensions (**Menu > Extensions > Gérer les extensions**).
 4. En haut à droite, activer le **Mode développeur**.
 5. Cliquer sur **Charger l'extension non empaquetée** et sélectionner le répertoire précédemment créé.
 
