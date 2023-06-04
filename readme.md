@@ -13,10 +13,12 @@ Cette extension permet d'effectuer les modifications suivantes dans l'interface 
 
 **Attention :**
 
-C'est une extension que j'ai créé pour mes propres besoins, et selon mes propres préférences.  
-Toute remarque / demande d'amélioration est la bienvenue mais, si elles seront toutes examinées, je ne m'engage en aucun cas à les satisfaire.
+C'est une extension que j'ai créée pour mes propres besoins, et selon mes propres préférences.  
+Toute [remarque / demande d'amélioration](https://github.com/bgaze/littlebock-hacks/issues) est la bienvenue cependant, si elles seront toutes examinées, je ne m'engage en aucun cas à les satisfaire.
 
-Elle ne fonctionne que dans Chrome et aucun support ne sera apporté pour d'autres navigateurs.
+L'extension ne fonctionne que dans Chrome et aucun support ne sera apporté pour d'autres navigateurs.
+
+Aucune publication dans le Chrome Web Store ne sera effectuée.
 
 **Installation :**
 
@@ -24,7 +26,7 @@ Elle ne fonctionne que dans Chrome et aucun support ne sera apporté pour d'autr
 2. Extraire l'archive dans un répertoire adéquat.
 3. Dans Chrome, afficher le gestionnaire d'extensions (**Menu > Extensions Gérer les extensions**).
 4. En haut à droite, activer le **Mode développeur**.
-5. Cliquer sur **Charger l'extension non empaquetée** et sélectionner le dossier précédemment créé.
+5. Cliquer sur **Charger l'extension non empaquetée** et sélectionner le répertoire précédemment créé.
 
 L'extension est désormais active.  
-Si des pages de Littlebock sont ouvertes dans votre navigateur, il faudra les recharger pour en voir les effets.
+Si des pages de Littlebock sont ouvertes dans votre navigateur, il faudra les recharger pour voir les effets de l'extension.
