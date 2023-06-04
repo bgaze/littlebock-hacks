@@ -20,7 +20,7 @@ En haut à droite, dérouler le menu intitulé `You can inject your own external
 
 **Important :** dans la zone en bas supprimer le texte en gris : `// Here You can type your custom JavaScript...`.
 
-Copier-coller dans cette zone tout le contenu du fichier [script.js](./script.js).
+Copier-coller dans cette zone tout le contenu du fichier [app.js](./script.js).
 
 Cliquez sur `Save` tout en haut à gauche pour enregistrer.
 

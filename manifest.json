@@ -1,0 +1,27 @@
+{
+    "name": "Littlebock Hacks",
+    "description": "Enhance Littlebock UI to make beers in a prettier way :-)",
+    "version": "0.0.0.1",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.littlebock.fr/*"
+            ],
+            "js": [
+                "app.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/assets/*"
+            ],
+            "matches": [
+                "https://*.littlebock.fr/*"
+            ],
+            "use_dynamic_url": true
+        }
+    ]
+}
