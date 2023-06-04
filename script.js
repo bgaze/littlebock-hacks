@@ -2,6 +2,8 @@
     function callIfCurrentUrlMatches(pattern, callback) {
         if ((new RegExp(`^https:\\/\\/www\\\\.littlebock\\.fr\\/${pattern}`)).test(window.location.href)) {
             callback();
+        }else{
+            console.error(`Unrecognized : ${pattern}`);
         }
     }
 
