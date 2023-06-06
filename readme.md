@@ -3,7 +3,7 @@
 Cette extension permet d'effectuer les modifications suivantes dans l'interface de Littlebock :
 
 - **Impression d'une recette :** modification de la mise en page pour être plus compacte et tenir plus facilement sur une seule page.
-- **Stocks > Matières premières :** affichage du stock total dans les onglets "Céréales et sucres", "Houblons" et "Levures".
+- **Stocks > Matières premières :** affichage du stock total et du coût total dans les onglets "Céréales et sucres", "Houblons" et "Levures".
 - **Stocks > Bières conditionnées :** affichage du stock total en litres et en nombre de bouteilles.
 - **Edition d'une recette :**
   - Réorganisation de l'ordre de section : sélection de la levure et configuration de l'empâtage avant la sélection des ingrédients.

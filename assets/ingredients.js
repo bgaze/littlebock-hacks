@@ -1,27 +1,40 @@
 $(document).ready(function () {
-    let sum = 0;
-    let unit = 'g';
     let ok = true;
+    let weight = 0;
+    let unit = 'g';
+    let amount = 0;
 
     $('.items-list-container table tbody tr').each(function () {
-        let parse = /([\d.]+) (\w+)/.exec($('td:first', this).text().trim());
+        let w = /([\d.]+) (\w+)/.exec($('td:first', this).text().trim());
+        if (w) {
+            weight += (w[2] === 'kg') ? parseFloat(w[1]) * 1000 : parseFloat(w[1]);
+        }
 
-        if (parse) {
-            sum += (parse[2] === 'kg') ? parseFloat(parse[1]) * 1000 : parseFloat(parse[1]);
-        } else {
+        let a = 0;
+        if ($('.text-muted', this).text().length) {
+            a = parseFloat($('.text-muted', this).text().trim().replace(/[^\d.]/g, ''));
+            if (!isNaN(a)) {
+                amount += a;
+            }
+        }
+
+        if (!w || isNaN(a)) {
+            console.log(w, a);
             ok = false;
             $(this).addClass('text-danger');
         }
     });
 
-    if (sum > 1000) {
-        sum /= 1000;
+    if (weight > 1000) {
+        weight /= 1000;
         unit = 'kg';
     }
 
+    amount = Math.round(amount * 100) / 100;
+
     $(`<button type="button" class="btn btn-rounded btn-outline-${ok ? 'secondary' : 'danger'} disabled">`)
         .css('box-shadow', 'none')
-        .html(ok ? `<strong>Stock total :</strong> ${sum} ${unit}` : 'Impossible de calculer le stock.')
+        .html(ok ? `<strong>Stock total :</strong> ${weight} ${unit} (${amount} €)` : 'Impossible de calculer le stock.')
         .insertBefore('.btn[data-path]:first')
         .parent()
         .addClass('d-flex align-items-center justify-content-between');
