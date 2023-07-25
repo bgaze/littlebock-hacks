@@ -1,0 +1,65 @@
+.card-header {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 2rem;
+}
+
+.recipe-sheet-print {
+    margin-bottom: 0 !important;
+}
+
+.card-bordered {
+    padding: .5rem;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+#custom-intro {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#custom-intro li {
+    flex-basis: 33.33%;
+    padding-right: .5rem;
+}
+
+.table-wrapper {
+    margin: 0 !important;
+    padding: .25rem 0 !important;
+}
+
+.table-wrapper table {
+    margin: 0 !important;
+}
+
+.table-wrapper table th {
+    background: none !important;
+    text-transform: none !important;
+    color: #6c757d !important;
+    font-weight: bold !important;
+    font-size: .875rem !important;
+    padding: .25rem .5rem !important;
+}
+
+.table-wrapper table td {
+    padding: .25rem .5rem !important;
+}
+
+#steps {
+    margin-bottom: 1.5rem;
+}
+
+#steps .recipe-timeline {
+    padding-left: 10px;
+}
+
+@media print {
+    .card-body.p-4 {
+        padding: 0 !important;
+    }
+}
