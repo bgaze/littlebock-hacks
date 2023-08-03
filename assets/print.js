@@ -1,13 +1,65 @@
 $(document).ready(function () {
-    $('.card-header h1').text($('.card-header h1').text().replace('Recette ', ''));
+    // Utils
+
+    function slugify(string) {
+        const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìıİłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż';
+        const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz';
+        const p = new RegExp(a.split('').join('|'), 'g')
+
+        return `${string}`
+            .toLowerCase()
+            .replace(p, c => b.charAt(a.indexOf(c)))
+            .replace(/[^a-z0-9]/g, '-')
+            .replace(/--+/g, '-')
+            .replace(/(^-+|-+$)/, '');
+    }
+
+    // Title
+
+    $('.card-header').addClass('mb-0').find('h1').text($('.card-header h1').text().replace('Recette ', ''));
+
+    // Intro
 
     let $intro = $('.card-bordered:first');
     $('<ul id="custom-intro" class="list-unstyled m-0">').append($('li', $intro)).appendTo($intro);
     $('> .row', $intro).remove();
 
+    // Recipe notes
+
     if ($('.presentation-wrapper > .row').text().trim() === '') {
         $('.presentation-wrapper > .row').remove();
+    } else {
+        $('.presentation-wrapper .notes').addClass('mb-0');
     }
+
+    // Add id to ingredients blocs
+
+    $('.ingredient-wrapper h4').each(function () {
+        $(this).parents('.ingredient-wrapper').attr('id', slugify($(this).text()));
+    });
+
+    // Format ingredients blocs notes
+
+    $('.ingredient-wrapper .notes').each(function () {
+        let cols = $(this).parents('.table').find('tr:first th').length;
+        $(this).parents('tr')
+            .addClass('notes-row')
+            .html(`<td colspan="${cols}" style="padding-top: 0 !important;">
+                       <span class="text-muted notes">${$(this).html()}</span>
+                   </td>`);
+    });
+
+    // Add checkboxes
+
+    $('.ingredient-wrapper:not(#eau-profil-cible) > .table-responsive').each(function () {
+        let cols = $('thead th', this).length;
+
+        $('tbody tr:not(.notes-row)', this).each(function () {
+            $('td:first', this).prepend('<i class="far fa-square mr-1" style="color: #000;"></i>');
+        });
+    });
+
+    // Move dry hopping value to intro
 
     $('.ingredient-wrapper > .table-responsive + .row').each(function () {
         let content = $(this).text().trim();
@@ -23,7 +75,7 @@ $(document).ready(function () {
         $(this).remove();
     });
 
-    // Steps
+    // Init steps
 
     let $mash = $('.ingredient-wrapper:last + .row > .col-6:first');
     let $boil = $('.ingredient-wrapper:last + .row > .col-6:last');
