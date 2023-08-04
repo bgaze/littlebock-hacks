@@ -61,18 +61,63 @@ function computeBasedOnTotal(container, items, currentTotal, format) {
     $input.val('');
 }
 
+function makeVolumesWidget() {
+    let observer = new MutationObserver(function (mutations) {
+        let $container = $('#profile_standard');
+        if ($container.length && !$('#volumes-widget').length) {
+            $('> .mb-1', $container).removeClass('mb-1');
+            $container.append(`<hr><div id="volumes-widget"></div>`);
+        }
+    });
+
+    observer.observe(document, {attributes: false, childList: true, characterData: false, subtree: true});
+}
+
+function makeVolumeRow(title, $el) {
+    if ($el.length) {
+        let value = $el.val();
+        if (value && value !== '' && parseFloat(value) > 0) {
+            $('#volumes-widget').append(`<div class="row">
+            <div class="col-8"><strong>${title}</strong></div>
+            <div class="col-4 text-right"><strong>${value} L</strong></div>
+        </div>`);
+        }
+    }
+}
+
+function refreshVolumesSummary() {
+    let $widget = $('#volumes-widget');
+
+    if ($widget.length) {
+        $widget.empty();
+
+        $('#mashsteps > li').each(function () {
+            if ($('.fields-infusion', this).is(':visible')) {
+                let label = ($(this).index() === 0) ? 'Volume d\'empâtage' : $('.mash-step-name', this).val();
+                label += ` (${$('.mash-step-infuse-temp', this).val()}°C)`;
+                makeVolumeRow(label, $('.mash-step-infuson-amount', this));
+            }
+        });
+
+        makeVolumeRow(`Volume de rinçage (${$('#app_recipe_mash_spargeTemp').val()}°C)`, $('#app_recipe_mash_spargeSize'));
+
+        makeVolumeRow('Volume pré-ébullition', $('#app_recipe_boilSize'));
+
+        makeVolumeRow('Volume en fermenteur', $('#app_recipe_batchSize'));
+    }
+}
+
 $(document).ready(function () {
     // Reorder recipe steps.
     $('#mashsteps').parents('#form_recipe > .row').insertAfter('#form_recipe > .row:first');
     $('#yeasts').parents('#form_recipe > .row').insertAfter('#form_recipe > .row:first');
 
-    // Manage fermentables & hops total
+    // Init fermentables & hops total widget
     makeTotalWidget('fermentables', 'kg');
     makeTotalWidget('hops', 'IBU');
-    setInterval(function () {
-        manageTotalAmount('fermentables', '.fermentable-amount', 'kg', 1000);
-        manageTotalAmount('hops', '.hop-amount', 'g', 10);
-    }, 500);
+
+    // Init volumes summary widget
+    makeVolumesWidget();
 
     // Set fermentables total amount
     $('#fermentables-total-widget button').click(function () {
@@ -89,5 +134,12 @@ $(document).ready(function () {
 
         computeBasedOnTotal('hops', '.hop-amount', ibu, 1);
     });
+
+    // Tick to synchronize widgets
+    setInterval(function () {
+        manageTotalAmount('fermentables', '.fermentable-amount', 'kg', 1000);
+        manageTotalAmount('hops', '.hop-amount', 'g', 10);
+        refreshVolumesSummary();
+    }, 500);
 });
 

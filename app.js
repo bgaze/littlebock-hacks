@@ -36,7 +36,7 @@ if (window.location.hostname.includes('littlebock.fr')) {
     if (page) {
         page.assets
             .filter(file => /\.css$/.test(file))
-            .forEach(file => document.body.append(makeStylesheet(file)));
+            .forEach(file => document.head.append(makeStylesheet(file)));
 
         let scripts = page.assets.filter(file => /\.js$/.test(file));
 
