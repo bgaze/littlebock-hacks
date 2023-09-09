@@ -11,6 +11,7 @@ Cette extension permet d'effectuer les modifications suivantes dans l'interface 
 - **Edition d'une recette :**
   - Réorganisation de l'ordre de section : sélection de la levure et configuration de l'empâtage avant la sélection des ingrédients.
   - Affichage d'un résumé des volumes de la recette.
+  - Calcul est affichage du Relative Bitterness Ratio (RBR)
   - Affichage du poids total pour les céréales et les houblons.
   - Ajustement du poids total des fermentescibles (la valeur saisie est dispatchée dans les céréales en conservant les proportions de la recette).
   - Ajustement du poids des houblons pour atteindre un IBU cible (le poids de chaque houblon est ajusté pour atteindre la valeur saisie en conservant les proportions de la recette).

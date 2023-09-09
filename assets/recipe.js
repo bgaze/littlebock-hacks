@@ -1,3 +1,15 @@
+function getIbu() {
+    let ibu = 0;
+
+    $('#hops .info-data-hops-ibu').each(function () {
+        if (!isNaN(parseFloat($(this).text()))) {
+            ibu += parseFloat($(this).text());
+        }
+    });
+
+    return ibu;
+}
+
 function makeTotalWidget(container, unit) {
     let $parent = $(`#${container}`).parent();
 
@@ -61,33 +73,49 @@ function computeBasedOnTotal(container, items, currentTotal, format) {
     $input.val('');
 }
 
-function makeVolumesWidget() {
+function makeSummaryWidgets() {
     let observer = new MutationObserver(function (mutations) {
         let $container = $('#profile_standard');
         if ($container.length && !$('#volumes-widget').length) {
             $('> .mb-1', $container).removeClass('mb-1');
-            $container.append(`<hr><div id="volumes-widget"></div>`);
+            $container.append(`<div id="rbr-widget"></div><hr><div id="volumes-widget"></div>`);
         }
     });
 
     observer.observe(document, {attributes: false, childList: true, characterData: false, subtree: true});
 }
 
-function makeVolumeRow(title, $el) {
-    if ($el.length) {
-        let value = $el.val();
-        if (value && value !== '' && parseFloat(value) > 0) {
-            $('#volumes-widget').append(`<div class="row">
+function makeSummaryRow(widget, title, value) {
+    if (typeof value === 'function') {
+        value = value();
+    }
+
+    if (value) {
+        $(`#${widget}-widget`).append(`<div class="row">
             <div class="col-8"><strong>${title}</strong></div>
-            <div class="col-4 text-right"><strong>${value} L</strong></div>
+            <div class="col-4 text-right"><strong>${value}</strong></div>
         </div>`);
-        }
     }
 }
 
-function refreshVolumesSummary() {
-    let $widget = $('#volumes-widget');
+function parseVolumeInput($el) {
+    if (!($el instanceof jQuery)) {
+        $el = $($el);
+    }
 
+    if ($el.length && $el.is('input') && $el.val() !== '') {
+        let value = parseFloat($el.val());
+
+        if (!isNaN(value) && value > 0) {
+            return `${value} L`;
+        }
+    }
+
+    return false;
+}
+
+function refreshSummaryVolumes() {
+    let $widget = $('#volumes-widget');
     if ($widget.length) {
         $widget.empty();
 
@@ -95,15 +123,41 @@ function refreshVolumesSummary() {
             if ($('.fields-infusion', this).is(':visible')) {
                 let label = ($(this).index() === 0) ? 'Volume d\'empâtage' : $('.mash-step-name', this).val();
                 label += ` (${$('.mash-step-infuse-temp', this).val()}°C)`;
-                makeVolumeRow(label, $('.mash-step-infuson-amount', this));
+                makeSummaryRow('volumes', label, parseVolumeInput($('.mash-step-infuson-amount', this)));
             }
         });
 
-        makeVolumeRow(`Volume de rinçage (${$('#app_recipe_mash_spargeTemp').val()}°C)`, $('#app_recipe_mash_spargeSize'));
+        makeSummaryRow('volumes', `Volume de rinçage (${$('#app_recipe_mash_spargeTemp').val()}°C)`, parseVolumeInput('#app_recipe_mash_spargeSize'));
 
-        makeVolumeRow('Volume pré-ébullition', $('#app_recipe_boilSize'));
+        makeSummaryRow('volumes', 'Volume pré-ébullition', parseVolumeInput('#app_recipe_boilSize'));
 
-        makeVolumeRow('Volume en fermenteur', $('#app_recipe_batchSize'));
+        makeSummaryRow('volumes', 'Volume en fermenteur', parseVolumeInput('#app_recipe_batchSize'));
+    }
+}
+
+function refreshSummaryRbr() {
+    let $widget = $('#rbr-widget');
+    if ($widget.length) {
+        $widget.empty();
+
+        let title = `Relative Bitterness Ratio 
+                           <a href="https://docs.google.com/spreadsheets/d/1sxEsKbCpKzyVOkt6iXQCN5Cmut2Dz7mspO8qZmOsamU" target="_blank">
+                               <i class="mdi mdi-help-circle text-info"></i>
+                           </a>`
+
+        makeSummaryRow('rbr', title, function () {
+            let bu = getIbu();
+            let og = parseFloat($('#profile_standard .text-info:eq(0)').text());
+            let fg = parseFloat($('#profile_standard .text-info:eq(1)').text());
+
+            if (bu && og && fg && og > 1) {
+                let gu = (og * 1000) - 1000;
+                let adf = (og - fg) / (og - 1);
+                return Math.round((bu / gu) * (1 + (adf - 0.7655)) * 1000) / 1000;
+            }
+
+            return false;
+        });
     }
 }
 
@@ -117,7 +171,7 @@ $(document).ready(function () {
     makeTotalWidget('hops', 'IBU');
 
     // Init volumes summary widget
-    makeVolumesWidget();
+    makeSummaryWidgets();
 
     // Set fermentables total amount
     $('#fermentables-total-widget button').click(function () {
@@ -126,20 +180,15 @@ $(document).ready(function () {
 
     // Set hops total IBU
     $('#hops-total-widget button').click(function () {
-        let ibu = 0;
-
-        $('#hops .info-data-hops-ibu').each(function () {
-            ibu += parseFloat($(this).text());
-        });
-
-        computeBasedOnTotal('hops', '.hop-amount', ibu, 1);
+        computeBasedOnTotal('hops', '.hop-amount', getIbu(), 1);
     });
 
     // Tick to synchronize widgets
     setInterval(function () {
         manageTotalAmount('fermentables', '.fermentable-amount', 'kg', 1000);
         manageTotalAmount('hops', '.hop-amount', 'g', 10);
-        refreshVolumesSummary();
+        refreshSummaryRbr();
+        refreshSummaryVolumes();
     }, 500);
 });
 
