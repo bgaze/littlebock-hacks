@@ -12,7 +12,11 @@ const pages = [
         assets: ['print.css', 'print.js']
     },
     {
-        pattern: /\/user\/brewery\/(recipe|brew-session\/\d+\/brew-session-recipe)\/\d+\/edit\/?$/,
+        pattern: /\/user\/brewery\/recipe\/(\d+\/edit|new)\/?$/,
+        assets: ['recipe.js']
+    },
+    {
+        pattern: /\/user\/brewery\/brew-session\/\d+\/brew-session-recipe\/\d+\/edit\/?$/,
         assets: ['recipe.js']
     }
 ];
