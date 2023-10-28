@@ -18,6 +18,10 @@ const pages = [
     {
         pattern: /\/user\/brewery\/brew-session\/\d+\/brew-session-recipe\/\d+\/edit\/?$/,
         assets: ['recipe.js']
+    },
+    {
+        pattern: /\/user\/brewery\/brew-session\/\d+\/fermentation\/?$/,
+        assets: ['fermentation.js']
     }
 ];
 

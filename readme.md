@@ -17,6 +17,7 @@ Cette extension pour Google Chrome ou Chromium permet d'effectuer les modificati
 _la valeur saisie est dispatchée dans les céréales en conservant les proportions de la recette._
   - Ajustement du poids des houblons pour atteindre un IBU cible.  
 _Le poids de chaque houblon est ajusté pour atteindre la valeur saisie en conservant les proportions de la recette._
+- **Suivi d'un brassin :** réorganisation des blocs et agrandissement du graphique.
 
 **Attention :**
 
