@@ -140,10 +140,10 @@ function refreshSummaryRbr() {
     if ($widget.length) {
         $widget.empty();
 
-        let title = `Relative Bitterness Ratio 
-                           <a href="https://docs.google.com/spreadsheets/d/1sxEsKbCpKzyVOkt6iXQCN5Cmut2Dz7mspO8qZmOsamU" target="_blank" style="display: inline-block;">
-                               <i class="mdi mdi-help-circle text-info"></i>
-                           </a>`
+        let title = `<a href="https://docs.google.com/spreadsheets/d/1sxEsKbCpKzyVOkt6iXQCN5Cmut2Dz7mspO8qZmOsamU" target="_blank" style="display: inline-block;color: #6c757d;">
+                                Relative Bitterness Ratio 
+                                <i class="mdi mdi-help-circle text-info"></i>
+                             </a>`
 
         makeSummaryRow('rbr', title, function () {
             let bu = getIbu();
