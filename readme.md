@@ -9,12 +9,13 @@ Cette extension pour Google Chrome ou Chromium permet d'effectuer les modificati
 - **Stocks > Consommables :** affichage du coût total du stock.
 - **Stocks > Bières conditionnées :** affichage du stock total en litres et en nombre de bouteilles.
 - **Edition d'une recette :**
-  - Réorganisation de l'ordre de section : sélection de la levure et configuration de l'empâtage avant la sélection des ingrédients.
+  - Réorganisation des sections : "A propos", "Levures" et "Empâtage" avant la sélection des ingrédients.
   - Affichage d'un résumé des volumes de la recette.
-  - Calcul et affichage du Relative Bitterness Ratio (RBR)
-  - Affichage du poids total pour les céréales et les houblons.
+  - Calcul et affichage du Relative Bitterness Ratio (RBR)  
+_Un lien redirige vers un référentiel des RBR par style._
+  - Affichage du poids total pour les fermentescibles et les houblons.
   - Ajustement du poids total des fermentescibles.  
-_la valeur saisie est dispatchée dans les céréales en conservant les proportions de la recette._
+_La valeur saisie est dispatchée dans les céréales en conservant les proportions de la recette._
   - Ajustement du poids des houblons pour atteindre un IBU cible.  
 _Le poids de chaque houblon est ajusté pour atteindre la valeur saisie en conservant les proportions de la recette._
 - **Suivi d'un brassin :** réorganisation des blocs et agrandissement du graphique.

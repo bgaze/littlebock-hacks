@@ -141,7 +141,7 @@ function refreshSummaryRbr() {
         $widget.empty();
 
         let title = `Relative Bitterness Ratio 
-                           <a href="https://docs.google.com/spreadsheets/d/1sxEsKbCpKzyVOkt6iXQCN5Cmut2Dz7mspO8qZmOsamU" target="_blank">
+                           <a href="https://docs.google.com/spreadsheets/d/1sxEsKbCpKzyVOkt6iXQCN5Cmut2Dz7mspO8qZmOsamU" target="_blank" style="display: inline-block;">
                                <i class="mdi mdi-help-circle text-info"></i>
                            </a>`
 
@@ -165,6 +165,7 @@ $(document).ready(function () {
     // Reorder recipe steps.
     $('#mashsteps').parents('#form_recipe > .row').insertAfter('#form_recipe > .row:first');
     $('#yeasts').parents('#form_recipe > .row').insertAfter('#form_recipe > .row:first');
+    $('#app_recipe_note').parents('#form_recipe > .row').insertAfter('#form_recipe > .row:first');
 
     // Init fermentables & hops total widget
     makeTotalWidget('fermentables', 'kg');
