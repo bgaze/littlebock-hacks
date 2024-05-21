@@ -2,7 +2,7 @@
 
 Cette extension pour Google Chrome ou Chromium permet d'effectuer les modifications suivantes dans l'interface de Littlebock :
 
-- **Impression d'une recette :** modification de la mise en page pour être plus compacte et tenir plus facilement sur une seule page.
+- **Impression d'une recette :** modification de la mise en page pour être plus compacte et tenir plus facilement sur une seule page ([voir un exemple](/assets/recipe.pdf)).
 - **Stocks > Matières premières :** 
   - affichage du stock total et de son coût total dans les onglets "Céréales et sucres", "Houblons" et "Levures".
   - affichage du coût total du stock dans l'onglet "Divers".
