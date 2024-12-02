@@ -55,7 +55,7 @@ if (window.location.hostname.includes('littlebock.fr')) {
                 scripts.forEach((file) => document.body.append(makeScript(file)));
             });
 
-            document.body.append(jquery);
+            (document.head || document.documentElement).append(jquery);
         }
     }
 }
