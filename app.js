@@ -1,61 +1,64 @@
 const pages = [
     {
         pattern: /^\/user\/brewery\/beer-product/,
-        assets: ['beer-product.js']
+        scripts: ['beer-product.js']
     },
     {
         pattern: /^\/user\/brewery\/(ingredient|consumable)\//,
-        assets: ['ingredients.js']
+        scripts: ['ingredients.js']
     },
     {
         pattern: /\/print\/?$/,
-        assets: ['print.css', 'print.js']
+        scripts: ['print.js'],
+        styles: ['print.css']
     },
     {
         pattern: /\/user\/brewery\/recipe\/(\d+\/edit|new)\/?$/,
-        assets: ['recipe.js']
+        scripts: ['recipe.js']
     },
     {
         pattern: /\/user\/brewery\/brew-session\/\d+\/brew-session-recipe\/\d+\/edit\/?$/,
-        assets: ['recipe.js']
+        scripts: ['recipe.js']
     },
     {
         pattern: /\/user\/brewery\/brew-session\/\d+\/fermentation\/?$/,
-        assets: ['fermentation.js']
+        scripts: ['fermentation.js']
     }
 ];
 
-function makeStylesheet(file) {
-    let el = document.createElement('link');
-    el.setAttribute('rel', 'stylesheet');
-    el.setAttribute('href', chrome.runtime.getURL(`assets/${file}`));
-    return el;
-}
+function importAsset(file, callback) {
+    let el, url = chrome.runtime.getURL(`assets/${file}`);
 
-function makeScript(file) {
-    let el = document.createElement('script');
-    el.setAttribute('src', chrome.runtime.getURL(`assets/${file}`));
-    return el;
+    if (/\.css$/.test(file)) {
+        el = document.createElement('link');
+        el.setAttribute('rel', 'stylesheet');
+        el.setAttribute('href', url);
+    } else if (/\.js$/.test(file)) {
+        el = document.createElement('script');
+        el.setAttribute('src', url);
+    } else {
+        throw `Invalid asset: ${file}`;
+    }
+
+    if (typeof callback === 'function') {
+        el.addEventListener('load', callback);
+    }
+
+    (document.head || document.documentElement).append(el);
 }
 
 if (window.location.hostname.includes('littlebock.fr')) {
     let page = pages.find(page => page.pattern.test(window.location.pathname));
 
     if (page) {
-        page.assets
-            .filter(file => /\.css$/.test(file))
-            .forEach(file => document.head.append(makeStylesheet(file)));
+        if (page.styles) {
+            page.styles.forEach(file => importAsset(file));
+        }
 
-        let scripts = page.assets.filter(file => /\.js$/.test(file));
-
-        if (scripts.length) {
-            let jquery = makeScript('jquery.min.js');
-
-            jquery.addEventListener('load', () => {
-                scripts.forEach((file) => document.body.append(makeScript(file)));
+        if (page.scripts) {
+            importAsset('jquery.min.js', function () {
+                page.scripts.forEach(file => importAsset(file));
             });
-
-            (document.head || document.documentElement).append(jquery);
         }
     }
 }
