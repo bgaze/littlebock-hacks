@@ -8,14 +8,20 @@
     margin-bottom: 0 !important;
 }
 
-.card-bordered {
-    padding: .5rem;
-    margin-bottom: 1rem;
+.presentation-wrapper, .ingredient-wrapper, #steps > div, #indicators > div {
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+    margin-bottom: .5rem;
+}
+
+.card-bordered, .table-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
 }
 
 h4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1rem !important;
+    margin: 0 !important;
 }
 
 #custom-intro {
@@ -24,13 +30,8 @@ h4 {
 }
 
 #custom-intro li {
-    flex-basis: 33.33%;
+    flex-basis: 25%;
     padding-right: .5rem;
-}
-
-.table-wrapper {
-    margin: 0 !important;
-    padding: .25rem 0 !important;
 }
 
 .table-wrapper table {
@@ -50,8 +51,38 @@ h4 {
     padding: .25rem .5rem !important;
 }
 
-#steps {
-    margin-bottom: 1.5rem;
+.indicator {
+    display: flex;
+    align-items: flex-end;
+    line-height: 1;
+    padding-top: .5rem;
+}
+
+.indicator span {
+    margin-left: 1rem;
+    flex-grow: 0;
+    flex-shrink: 1;
+}
+
+.indicator span.expected {
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.indicator span.input {
+    border-bottom: 1px solid #6c757d;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+#steps, #indicators  {
+    margin: 0 0 .5rem 0;
+    justify-content: space-between;;
+
+    > .col-4 {
+        flex: 0 0 calc(33.3333% - 0.333rem);
+        max-width: calc(33.3333% - 0.333rem);
+    }
 }
 
 #steps .recipe-timeline {
