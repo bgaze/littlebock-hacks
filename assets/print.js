@@ -93,6 +93,13 @@ $(document).ready(function () {
         });
     });
 
+    // Reduce water block
+
+    $('#eau-profil-cible table th').each( (i, el) => {
+        $(`#eau-profil-cible table td:eq(${i})`).prepend(`<strong class="mr-2">${$(el).text()}&nbsp;:</strong>`);
+    });
+    $('#eau-profil-cible table tr:first').remove();
+
     // Move dry hopping value to intro
 
     $('.ingredient-wrapper > .table-responsive + .row').each(function () {
