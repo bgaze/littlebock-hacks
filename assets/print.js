@@ -49,7 +49,15 @@ $(document).ready(function () {
 
     // Title
 
-    $('.card-header').addClass('mb-0').find('h1').text($('.card-header h1').text().replace('Recette ', ''));
+    $('.card-header')
+        .addClass('mb-0 py-2 px-4 d-flex align-items-end')
+        .removeClass('text-center')
+        .append('<h5 class="ml-4 flex-grow-0 flex-shrink-0">Brassin n° _________</h5>')
+        .append('<h5 class="ml-4 flex-grow-0 flex-shrink-0">Date de brassage : ____________________</h5>')
+        .find('h1')
+        .removeClass('my-1')
+        .addClass('flex-grow-1 flex-shrink-1')
+        .text($('.card-header h1').text().replace('Recette ', ''));
 
     // Intro
 
@@ -63,7 +71,7 @@ $(document).ready(function () {
     if ($('.presentation-wrapper > .row').text().trim() === '') {
         $('.presentation-wrapper > .row').remove();
     } else {
-        $('.presentation-wrapper .notes').addClass('mb-0');
+        $('.presentation-wrapper .notes').addClass('mb-0').addClass('mt-2');
     }
 
     // Add id to ingredients blocs
@@ -71,6 +79,8 @@ $(document).ready(function () {
     $('.ingredient-wrapper h4').each(function () {
         $(this).parents('.ingredient-wrapper').attr('id', slugify($(this).text()));
     });
+
+    $('#levures').insertBefore('#cereales-et-sucres');
 
     // Format ingredients blocs notes
 
@@ -95,7 +105,7 @@ $(document).ready(function () {
 
     // Reduce water block
 
-    $('#eau-profil-cible table th').each( (i, el) => {
+    $('#eau-profil-cible table th').each((i, el) => {
         $(`#eau-profil-cible table td:eq(${i})`).prepend(`<strong class="mr-2">${$(el).text()}&nbsp;:</strong>`);
     });
     $('#eau-profil-cible table tr:first').remove();
@@ -128,15 +138,15 @@ $(document).ready(function () {
                 <table class="indicators"></table>
             </div>
             <div id="boil" class="col-4">
-                <h4 class="mb-"><i class="mdi mdi-fire mr-1"></i> Ébullition</h4>
+                <h4 class="mb-2"><i class="mdi mdi-fire mr-1"></i> Ébullition</h4>
                 <table class="indicators"></table>
             </div>
             <div id="fermentation" class="col-4">
-                <h4 class="mb-0"><i class="mdi mdi-chart-bubble mr-1"></i>Fermentation</h4>
+                <h4 class="mb-2"><i class="mdi mdi-chart-bubble mr-1"></i>Fermentation</h4>
                 <div class="fermenting mb-3">
                     <table class="indicators"></table>
                 </div>
-                <h4 class="mb-0"><i class="mdi mdi-bottle-wine mr-1"></i>Conditionnement</h4>
+                <h4 class="mb-2"><i class="mdi mdi-bottle-wine mr-1"></i>Conditionnement</h4>
                 <div class="conditioning">
                     <table class="indicators"></table>
                 </div>
@@ -154,8 +164,8 @@ $(document).ready(function () {
         original_gravity: ['Densité initiale', '', ''],
 
         final_gravity: ['Densité finale', '', ''],
-        final_volume: ['Volume conditionné', '', ''],
-        sugar: ['Resucrage', '', ''],
+        final_volume: ['Volume conditionné', false, ''],
+        sugar: ['Resucrage', false, ''],
         abv: ['Taux d’alcool', '', ''],
     };
 
@@ -168,7 +178,7 @@ $(document).ready(function () {
         }
     }
 
-    $('.recipe-timeline', $mash).addClass('my-2').insertBefore('#mash .indicators');
+    $('.recipe-timeline', $mash).addClass('m-0').insertBefore('#mash .indicators');
 
     parseCells($('.col-6 .col-6', $mash), {
         ['Ratio eau/grain de départ']: v => $('#mash h4').append(` ( ${v} )`),
@@ -178,7 +188,7 @@ $(document).ready(function () {
 
     // Boil
 
-    $('.recipe-timeline', $boil).addClass('my-2').insertBefore('#boil .indicators');
+    $('.recipe-timeline', $boil).addClass('m-0').insertBefore('#boil .indicators');
 
     parseCells($('.col-4 .col-12', $boil), {
         ['Volume d\'ébullition']: 'pre_boil_volume',
@@ -222,8 +232,6 @@ $(document).ready(function () {
 
     // Misc indicators
 
-    parseCells($('#custom-intro li'), {'Volume': 'original_volume'});
-
     parseCells($('.profil-wrapper > .row > div'), {
         'DI est.': v => {
             indicators.post_boil_gravity[1] = v;
@@ -231,6 +239,34 @@ $(document).ready(function () {
         },
         'DF est.': v => indicators.final_gravity[1] = v,
         'Alcool est.': v => indicators.abv[1] = v.replace('alc./vol.', ''),
+    });
+
+    let buGuRatio = false;
+
+    parseCells($('#custom-intro li'), {
+        'Volume': 'original_volume',
+        'Fermentation': (v, l, el) => $(el).remove(),
+        'Ratio IBU/DI': (v, l, el) => {
+            $(el).remove();
+            buGuRatio = v;
+        },
+        'IBU': (v, l, el) => {
+            let bu = parseInt(v);
+            let og = parseFloat(indicators.original_gravity[1]);
+            let fg = parseFloat(indicators.final_gravity[1]);
+
+            if (buGuRatio) {
+                $(el).append(`<span class="mx-1">|</span><strong>IBU/DI&nbsp;:</strong> ${buGuRatio}`);
+            }
+
+            if (bu && og && fg && og > 1) {
+                let gu = (og * 1000) - 1000;
+                let adf = (og - fg) / (og - 1);
+                let rbr = Math.round((bu / gu) * (1 + (adf - 0.7655)) * 1000) / 1000;
+
+                $(el).append(`<span class="mx-1">|</span><strong>RBR&nbsp;:</strong> ${rbr}`);
+            }
+        }
     });
 
     $('#steps').after(`<div id="indicators" class="row">

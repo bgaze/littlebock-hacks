@@ -4,6 +4,10 @@
     margin-bottom: 2rem;
 }
 
+.card-body.p-4 {
+    padding-top: 0 !important;
+}
+
 .recipe-sheet-print {
     margin-bottom: 0 !important;
 }
@@ -30,8 +34,7 @@ h4 {
 }
 
 #custom-intro li {
-    flex-basis: 25%;
-    padding-right: .5rem;
+    flex-basis: 33.3333%;
 }
 
 .table-wrapper table {
@@ -76,7 +79,7 @@ h4 {
 }
 
 #steps, #indicators  {
-    margin: 0 0 .5rem 0;
+    margin: 0;
     justify-content: space-between;;
 
     > .col-4 {
@@ -90,6 +93,11 @@ h4 {
 }
 
 @media print {
+    .card-header.px-4{
+        padding-top: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
     .card-body.p-4 {
         padding: 0 !important;
     }
